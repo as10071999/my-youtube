@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import VideoDetail from "./components/VideoDetail";
+import VideoList from "./components/VideoList";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 import {
   AppBar,
   Toolbar,
@@ -74,7 +77,7 @@ export default function App() {
   const searchRef = useRef();
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState([]);
-
+  const Window = useRef(null);
   console.log("Videos", videos);
   const handleKeyPress = async (e) => {
     if (e.key === "Enter") {
@@ -85,7 +88,7 @@ export default function App() {
       const response = await axios.get(url, {
         params: {
           part: "snippet",
-          maxResults: 5,
+          maxResults: 6,
           safeSearch: "moderate",
           key: KEY,
           q: query,
@@ -94,12 +97,17 @@ export default function App() {
       // console.log("Serach asked");
       // console.log("Data Fetched:", response.data);
       setVideos(response.data.items);
-      setSelectedVideo(response.data.items[0]);
+      // setSelectedVideo(response.data.items[0]);
     }
+  };
+  const handleVideoSelect = (video) => {
+    setSelectedVideo(video);
+    Window.current.scrollIntoView();
   };
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <CssBaseline />
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             edge="start"
@@ -129,17 +137,22 @@ export default function App() {
           </div>
         </Toolbar>
       </AppBar>
-      <Grid
-        style={{ backgroundColor: "red" }}
-        container
-        spacing={4}
-        direction="row"
-      >
-        <Grid item style={{ backgroundColor: "pink" }} xs={12} sm={9}>
-          <VideoDetail video={selectedVideo} />
+      <Grid container spacing={4} direction="row">
+        <Grid
+          item
+          container
+          xs={12}
+          sm={9}
+          ref={Window}
+          align-items-xs-center
+          justify="center"
+        >
+          <Grid item>
+            <VideoDetail video={selectedVideo} />
+          </Grid>
         </Grid>
-        <Grid item style={{ backgroundColor: "Yellow" }} xs={12} sm={3}>
-          List
+        <Grid item xs={12} sm={3}>
+          <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
         </Grid>
       </Grid>
     </div>
