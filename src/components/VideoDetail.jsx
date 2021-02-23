@@ -4,17 +4,13 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  CircularProgress,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import React from "react";
 
 const VideoDetail = ({ video }) => {
   if (!video) {
-    return (
-      <div>
-        <CircularProgress color="secondary" />
-      </div>
-    );
+    return <div></div>;
   }
 
   const videoSrc = `https://www.youtube.com/embed/${video.id.videoId}`;

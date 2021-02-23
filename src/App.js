@@ -16,7 +16,7 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import axios from "axios";
-
+import Alert from "@material-ui/lab/Alert";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -147,7 +147,20 @@ export default function App() {
           align-items-xs-center
           justify="center"
         >
-          <Grid item>
+          <Grid item style={{ margin: "5px" }}>
+            {videos.length == 0 && (
+              <>
+                <Alert severity="warning">Search on any Topic</Alert>
+              </>
+            )}
+            {videos.length != 0 && (
+              <>
+                {!selectedVideo && (
+                  <Alert severity="info">Play any Video</Alert>
+                )}
+              </>
+            )}
+
             <VideoDetail video={selectedVideo} />
           </Grid>
         </Grid>
