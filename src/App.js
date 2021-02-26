@@ -12,6 +12,8 @@ import {
   fade,
   makeStyles,
   Grid,
+  Card,
+  CardContent,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import YouTubeIcon from "@material-ui/icons/YouTube";
@@ -160,11 +162,30 @@ export default function App() {
                 )}
               </>
             )}
-
-            <VideoDetail video={selectedVideo} />
+            <Grid item item xs={12}>
+              <VideoDetail video={selectedVideo} />
+            </Grid>
+            <Grid item item xs={12}>
+              <Card>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    About
+                  </Typography>
+                  <Typography variant="h5" component="h2">
+                    MyTube
+                  </Typography>
+                  <Typography color="textSecondary">
+                    Simple Your own Youtube Search Engine
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    Fetching Best 5 Results For any Matched keywords.
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={3} container direction="column">
           <VideoList handleVideoSelect={handleVideoSelect} videos={videos} />
         </Grid>
       </Grid>
